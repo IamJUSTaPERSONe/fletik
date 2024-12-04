@@ -10,7 +10,7 @@ class Router:
         self.page = page
         self.app_routers = [
             path(url=r'/', clear=True, view=LoginPage().view),
-            path(url=r'/singup', clear=False, view=SingupPage().view),
+            path(url=r'/singup', clear=True, view=SingupPage().view),
             path(url=r'/main_page', clear=False, view=MainPage().view)
         ]
 

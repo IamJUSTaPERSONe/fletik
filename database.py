@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def create_db():
     conn = sqlite3.connect('notes_app.db')
     cursor = conn.cursor()
@@ -13,6 +14,8 @@ def create_db():
     ''')
     conn.commit()
     conn.close()
+
+
 create_db()
 
 
