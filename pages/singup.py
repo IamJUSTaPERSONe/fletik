@@ -1,9 +1,10 @@
 import flet as ft
 from flet_route import Params, Basket
 from utils.validations import Validation
+from database import connect_db
+from utils.function import hash_password
 import time
 import sqlite3
-from database import connect_db
 
 
 
@@ -123,7 +124,7 @@ class SingupPage:
                     self.password_input.update()
                     self.conf_password_input.update()
                 else:
-                    if reg_user(email_value, login_value, password_value):
+                    if reg_user(email_value, login_value, hash_password(password_value)):
                         self.error.value = 'Вы успешно зарегестрированы'
                         self.error.size = 12
                         self.error.color = 'green'
