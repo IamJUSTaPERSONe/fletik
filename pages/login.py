@@ -10,22 +10,15 @@ class LoginPage:
     error = ft.Text(' ', color='red')
 
     email_input = ft.Container(
-        content=ft.TextField(label='Email',
-                             bgcolor='#22242B',
-                             border=ft.InputBorder.NONE,
-                             filled=True,
-                             color='#E6D6FF'),
-        border_radius=10
+        content=ft.TextField(label='Email', bgcolor='#22242B', border=ft.InputBorder.NONE, filled=True,
+                             color='#E6D6FF'), border_radius=10
     )
 
     password_input = ft.Container(
-        content=ft.TextField(label='Password',
-                             password=True, can_reveal_password=True,
-                             bgcolor='#22242B',
+        content=ft.TextField(label='Password', password=True, can_reveal_password=True, bgcolor='#22242B',
                              border=ft.InputBorder.NONE,
                              filled=True,
-                             color='#E6D6FF'),
-        border_radius=10
+                             color='#E6D6FF'),  border_radius=10
     )
 
     def view(self, page: ft.Page, params: Params, basket: Basket):
@@ -43,12 +36,10 @@ class LoginPage:
                 cursor.execute('SELECT COUNT(*) FROM users WHERE email = ? AND password = ?', (email, password))
                 count = cursor.fetchone()[0]
                 if count > 0:
-                    # page.go('/main_page')
                     print('Вход выполнен')
                     return True
                 else:
                     print('Такой записи нет')
-
             except sqlite3.Error as e:
                 print(f"Ошибка базы данных: {e}")
                 return False
@@ -60,7 +51,6 @@ class LoginPage:
             password_value = self.password_input.content.value
             if email_value and password_value:
                 if auth_user(email_value, password_value):
-                    print('вход норм')
                     self.error.value = 'Выполняется вход в аккаунт'
                     self.error.size = 12
                     self.error.color = 'green'
@@ -68,7 +58,6 @@ class LoginPage:
                     time.sleep(3)
                     self.error.size = 0
                     page.go('/main_page')
-
                 else:
                     self.error.value = 'Такого аккаунта нет. Зарегестрируйтесь'
                     self.error.size = 12
@@ -101,11 +90,9 @@ class LoginPage:
                                             size=25,
                                             color='#E6D6FF',
                                             weight=ft.FontWeight.NORMAL),
-
                                     self.email_input,
                                     self.password_input,
                                     self.error,
-
 
                                     ft.Container(
                                         ft.Text('Авторизация', color='#E6D6FF'),
@@ -133,12 +120,10 @@ class LoginPage:
                                             size=30,
                                             weight=ft.FontWeight.BOLD)
                                 ]
-
                             )
                         )
                     ]
                 )
             ], bgcolor='#111014', padding=0
-
         )
     

@@ -1,4 +1,5 @@
 import flet as ft
+from flet_core.border_radius import vertical
 from flet_route import Params, Basket
 from pages.login import LoginPage
 
@@ -11,9 +12,6 @@ class MainPage:
         page.window.min_width = 900
         page.window.min_height = 600
 
-
-
-
         # меню -> заголовок
         logotip = ft.Container(
             padding=ft.padding.symmetric(17, 13),
@@ -21,31 +19,32 @@ class MainPage:
                 controls=[
                     ft.CircleAvatar(foreground_image_src='https://i.pinimg.com/originals/d0/cf/a8/d0cfa8b3f2b9aa687e99cdd88bb82f10.jpg',
                                     width=50, height=40, content=ft.Text('A')),
-                    # ft.Image(src='resours/images/logo.png', width=50, height=40, fit=ft.ImageFit.FILL),
                     ft.Text(f'username', expand=True, color='white', size=30)
                 ], alignment=ft.MainAxisAlignment.START,
                 spacing=5,
-                vertical_alignment=ft.MainAxisAlignment.CENTER
             )
         )
 
         # стиль меню
         style_menu = ft.ButtonStyle(color={ft.ControlState.HOVERED: '#9B5CFF',
                                            ft.ControlState.DEFAULT: ft.colors.WHITE},
-                                    icon_size=20,
-                                    overlay_color='white20',
-                                    shadow_color='black')
+                                    icon_size=25, overlay_color='white20', shadow_color='black')
         # меню -> кнопки
         sidebar = ft.Container(
             padding=ft.padding.symmetric(0, 13),
             content=ft.Column(
                 controls=[
                     ft.Text('МЕНЮ', color='grey', size=20),
-                    ft.TextButton('Главная', width=100, icon='space_dashboard_rounded', style=style_menu),
-                    ft.TextButton('Аккаунт', icon='ACCOUNT_CIRCLE', style=style_menu),
-                    ft.TextButton('Настройки', icon='SETTINGS', style=style_menu),
-
-                ]
+                    ft.TextButton('Главная', icon='space_dashboard_rounded',  style=style_menu,
+                                  on_click=lambda e: page.go('/main_page')),
+                    ft.TextButton('Аккаунт', icon='ACCOUNT_CIRCLE', style=style_menu,
+                                  on_click=lambda e: page.go('/acc')),
+                    ft.TextButton('Настройки', icon='SETTINGS', style=style_menu,
+                                  on_click=lambda e: page.go('/settings')),
+                    ft.Container(height=300),
+                    ft.TextButton('Выход', icon='EXIT_TO_APP_SHARP', style=style_menu,
+                                  on_click=lambda e: page.go('/'))
+                ], spacing=20,
             )
         )
 
@@ -54,8 +53,35 @@ class MainPage:
             return ft.TextField(label=f'{label}', bgcolor='#22242B',
                                 border=ft.InputBorder.NONE, filled=True, color='#E6D6FF')
 
-        search = ft.Container(content=search_form('Найти заметку'), border_radius=20)
-        search_btn = ft.ElevatedButton('🔎', bgcolor='#22242B')
+        search = ft.Container(content=search_form('Найти заметку'), border_radius=20, width=300, expand=2)
+        search_btn = ft.ElevatedButton('🔎', bgcolor='#22242B',
+                                       style=ft.ButtonStyle(text_style=ft.TextStyle(size=20)))
+
+        folder = ft.Container(
+            content=ft.Row(
+                controls=[ft.TextButton('folder1'),
+                          ft.TextButton('folder2')]
+            )
+        )
+
+        notes = []
+        def add_note(e):
+            note_text = note_input.value.strip()
+            if note_text:
+                notes.append(note_text)
+                note_input.value = ''
+                update_notes()
+        def update_notes():
+            notes_list.controls.clear()
+            for note in notes:
+                notes_list.controls.append(ft.Text(note))
+                page.update()
+
+
+
+        note_input = ft.TextField(label='Введите заметку')
+        add_note_button = ft.ElevatedButton('+', on_click=add_note)
+        notes_list = ft.Column()
 
         return ft.View(
             '/main_page',
@@ -69,22 +95,35 @@ class MainPage:
                                 controls=[
                                     logotip,
                                     sidebar,
-
                                 ]
                             ), bgcolor='#22242B'
                         ),
 
                         ft.Container(
                             expand=4,
-                            padding=ft.padding.symmetric(10,20),
+                            padding=ft.padding.symmetric(20,20),
                             content=ft.Column(
                                 controls=[
-                                    search,
-                                    search_btn
+                                    ft.Row(
+                                        controls=[
+                                            search,
+                                            search_btn
+                                        ]
+                                    ),
+                                    ft.Column(
+                                        controls=[
+                                            note_input,
+                                            add_note_button,
+                                            notes_list
+                                        ]
+                                    )
                                 ]
-
                             )
-                        )
+
+
+                        ),
+
+
                     ]
                 )
 
