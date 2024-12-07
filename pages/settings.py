@@ -1,6 +1,7 @@
 import flet as ft
 from flet_route import Params, Basket
 
+
 class SettPage:
     def view(self, page: ft.Page, params: Params, basket: Basket):
         page.title = 'Настройки'

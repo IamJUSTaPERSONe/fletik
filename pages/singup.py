@@ -8,6 +8,7 @@ import sqlite3
 
 
 
+
 class SingupPage:
     validation = Validation()
 
@@ -124,8 +125,9 @@ class SingupPage:
                     self.password_input.update()
                     self.conf_password_input.update()
                 else:
-                    if reg_user(email_value, login_value, hash_password(password_value)):
+                    if reg_user(email_value, login_value, password_value):
                         self.error.value = 'Вы успешно зарегестрированы'
+                        page.session.set('login_value', login_value)
                         self.error.size = 12
                         self.error.color = 'green'
                         self.error.update()

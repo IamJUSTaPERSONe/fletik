@@ -12,6 +12,8 @@ class MainPage:
         page.window.min_width = 900
         page.window.min_height = 600
 
+        login = page.session.get('login_value')
+
         # меню -> заголовок
         logotip = ft.Container(
             padding=ft.padding.symmetric(17, 13),
@@ -19,7 +21,7 @@ class MainPage:
                 controls=[
                     ft.CircleAvatar(foreground_image_src='https://i.pinimg.com/originals/d0/cf/a8/d0cfa8b3f2b9aa687e99cdd88bb82f10.jpg',
                                     width=50, height=40, content=ft.Text('A')),
-                    ft.Text(f'username', expand=True, color='white', size=30)
+                    ft.Text(f'{login}', expand=True, color='white', size=30)
                 ], alignment=ft.MainAxisAlignment.START,
                 spacing=5,
             )
@@ -64,24 +66,12 @@ class MainPage:
             )
         )
 
-        notes = []
-        def add_note(e):
-            note_text = note_input.value.strip()
-            if note_text:
-                notes.append(note_text)
-                note_input.value = ''
-                update_notes()
-        def update_notes():
-            notes_list.controls.clear()
-            for note in notes:
-                notes_list.controls.append(ft.Text(note))
-                page.update()
+        create_note_button = ft.TextButton(icon='ADD_SHARP', style=ft.ButtonStyle(icon_size=70),
+                                           on_click=lambda e: page.go('/create_note'))
 
+        data = page.session.get('title_note')
+        print(data)
 
-
-        note_input = ft.TextField(label='Введите заметку')
-        add_note_button = ft.ElevatedButton('+', on_click=add_note)
-        notes_list = ft.Column()
 
         return ft.View(
             '/main_page',
@@ -107,16 +97,14 @@ class MainPage:
                                     ft.Row(
                                         controls=[
                                             search,
-                                            search_btn
+                                            search_btn,
                                         ]
                                     ),
-                                    ft.Column(
-                                        controls=[
-                                            note_input,
-                                            add_note_button,
-                                            notes_list
-                                        ]
-                                    )
+                                    ft.Row(height=500),
+                                    ft.Row(controls=[create_note_button],
+                                           spacing=50,
+                                           alignment=ft.MainAxisAlignment.END)
+
                                 ]
                             )
 
@@ -129,4 +117,5 @@ class MainPage:
 
             ], bgcolor='#111014', padding=0
         )
+
 

@@ -1,8 +1,10 @@
 import flet as ft
 from flet_route import Params, Basket
 from database import connect_db
+from utils.function import hash_password
 import sqlite3
 import time
+
 
 
 class LoginPage:
