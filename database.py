@@ -19,6 +19,26 @@ def create_db():
 create_db()
 
 
+def db_table_notes():
+    conn = sqlite3.connect('notes_app.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS notes (
+            id_note INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            title_note TEXT NOT NULL,
+            text_note TEXT NOT NULL,
+            date_created  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id) 
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+
+db_table_notes()
+
+
 def connect_db():
     conn = sqlite3.connect('notes_app.db')
     return conn

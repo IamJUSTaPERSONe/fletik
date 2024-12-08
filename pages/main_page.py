@@ -1,7 +1,6 @@
 import flet as ft
-from flet_core.border_radius import vertical
+from database import connect_db
 from flet_route import Params, Basket
-from pages.login import LoginPage
 
 
 class MainPage:
@@ -19,8 +18,8 @@ class MainPage:
             padding=ft.padding.symmetric(17, 13),
             content=ft.Row(
                 controls=[
-                    ft.CircleAvatar(foreground_image_src='https://i.pinimg.com/originals/d0/cf/a8/d0cfa8b3f2b9aa687e99cdd88bb82f10.jpg',
-                                    width=50, height=40, content=ft.Text('A')),
+                    ft.CircleAvatar(foreground_image_src='resours/images/cat.jpg',
+                                    width=50, height=40, content=ft.Text('?')),
                     ft.Text(f'{login}', expand=True, color='white', size=30)
                 ], alignment=ft.MainAxisAlignment.START,
                 spacing=5,
@@ -59,19 +58,8 @@ class MainPage:
         search_btn = ft.ElevatedButton('🔎', bgcolor='#22242B',
                                        style=ft.ButtonStyle(text_style=ft.TextStyle(size=20)))
 
-        folder = ft.Container(
-            content=ft.Row(
-                controls=[ft.TextButton('folder1'),
-                          ft.TextButton('folder2')]
-            )
-        )
-
         create_note_button = ft.TextButton(icon='ADD_SHARP', style=ft.ButtonStyle(icon_size=70),
                                            on_click=lambda e: page.go('/create_note'))
-
-        data = page.session.get('title_note')
-        print(data)
-
 
         return ft.View(
             '/main_page',
@@ -100,7 +88,14 @@ class MainPage:
                                             search_btn,
                                         ]
                                     ),
-                                    ft.Row(height=500),
+                                    ft.Container(
+                                        ft.Column(
+                                            controls=[
+                                                ft.Text('gfgdfgdfg')
+                                            ]
+                                        )
+                                    ),
+                                    # ft.Row(height=500),
                                     ft.Row(controls=[create_note_button],
                                            spacing=50,
                                            alignment=ft.MainAxisAlignment.END)
@@ -110,8 +105,6 @@ class MainPage:
 
 
                         ),
-
-
                     ]
                 )
 
