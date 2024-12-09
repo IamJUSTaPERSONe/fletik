@@ -49,6 +49,33 @@ class MainPage:
             )
         )
 
+        def get_all_notes():
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute('SELECT id_note, title_note, text_note FROM notes')
+            notes = cur.fetchall()
+            conn.close()
+            return notes
+
+        def update_notes():
+            notes_list.controls.clear()
+            notes = get_all_notes()
+            for note in notes:
+                note_id = note[0]
+                title_note = note[1]
+                text_note = note[2]
+                notes_list.controls.append(ft.Container(
+                    content=ft.Column([
+                        ft.Text(title_note, size=20),
+                        ft.Text(text_note)
+                    ]), margin=ft.margin.only(bottom=10),
+                    bgcolor='grey',
+                    border_radius=10,
+                    padding=ft.padding.all(10),
+                    on_click=lambda e: page.go('/edit_note')
+                ))
+                page.update()
+
         #  строка поиска
         def search_form(label):
             return ft.TextField(label=f'{label}', bgcolor='#22242B',
@@ -61,6 +88,10 @@ class MainPage:
         create_note_button = ft.TextButton(icon='ADD_SHARP', style=ft.ButtonStyle(icon_size=70),
                                            on_click=lambda e: page.go('/create_note'))
 
+        notes_list = ft.Column()
+
+
+        update_notes()
         return ft.View(
             '/main_page',
             controls=[
@@ -91,7 +122,8 @@ class MainPage:
                                     ft.Container(
                                         ft.Column(
                                             controls=[
-                                                ft.Text('gfgdfgdfg')
+                                                notes_list,
+
                                             ]
                                         )
                                     ),
@@ -110,5 +142,6 @@ class MainPage:
 
             ], bgcolor='#111014', padding=0
         )
+
 
 

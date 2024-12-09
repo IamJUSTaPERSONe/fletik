@@ -6,6 +6,7 @@ from pages.settings import SettPage
 from pages.singup import SingupPage
 from pages.main_page import MainPage
 from pages.createnote import CreateNotePage
+from pages.editnote import EditNotePage
 
 
 class Router:
@@ -17,7 +18,8 @@ class Router:
             path(url=r'/main_page', clear=False, view=MainPage().view),
             path(url=r'/acc', clear=False, view=AccPage().view),
             path(url=r'/settings', clear=False, view=SettPage().view),
-            path(url=r'/create_note', clear=False, view=CreateNotePage().view)
+            path(url=r'/create_note', clear=False, view=CreateNotePage().view),
+            path(url=r'/edit_note', clear=False, view=EditNotePage().view)
         ]
 
         Routing(
