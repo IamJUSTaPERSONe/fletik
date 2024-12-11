@@ -18,7 +18,7 @@ class MainPage:
             padding=ft.padding.symmetric(17, 13),
             content=ft.Row(
                 controls=[
-                    ft.CircleAvatar(foreground_image_src='resours/images/cat.jpg',
+                    ft.CircleAvatar(foreground_image_src='https://avatars.mds.yandex.net/i?id=e17a4e0b861858d4c57dd34d0de833d868b5fea3-4078555-images-thumbs&n=13',
                                     width=50, height=40, content=ft.Text('?')),
                     ft.Text(f'{login}', expand=True, color='white', size=30)
                 ], alignment=ft.MainAxisAlignment.START,
@@ -72,7 +72,7 @@ class MainPage:
                     bgcolor='grey',
                     border_radius=10,
                     padding=ft.padding.all(10),
-                    on_click=lambda e: page.go('/edit_note')
+                    on_click=lambda e: page.go('/edit_note', note_id)
                 ))
                 page.update()
 
@@ -90,7 +90,6 @@ class MainPage:
 
         notes_list = ft.Column()
 
-
         update_notes()
         return ft.View(
             '/main_page',
@@ -107,36 +106,30 @@ class MainPage:
                                 ]
                             ), bgcolor='#22242B'
                         ),
-
                         ft.Container(
                             expand=4,
-                            padding=ft.padding.symmetric(20,20),
+                            padding=ft.padding.symmetric(20, 20),
                             content=ft.Column(
                                 controls=[
                                     ft.Row(
                                         controls=[
                                             search,
                                             search_btn,
+                                            create_note_button
                                         ]
                                     ),
+
                                     ft.Container(
-                                        ft.Column(
-                                            controls=[
-                                                notes_list,
-
-                                            ]
+                                        content=ft.ListView(
+                                                controls=[
+                                                    notes_list,
+                                                ]
+                                            ), expand=True
                                         )
-                                    ),
-                                    # ft.Row(height=500),
-                                    ft.Row(controls=[create_note_button],
-                                           spacing=50,
-                                           alignment=ft.MainAxisAlignment.END)
-
                                 ]
                             )
+                        )
 
-
-                        ),
                     ]
                 )
 

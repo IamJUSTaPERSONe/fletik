@@ -17,7 +17,7 @@ class SettPage:
             padding=ft.padding.symmetric(17, 13),
             content=ft.Row(
                 controls=[
-                    ft.CircleAvatar(foreground_image_src='resours/images/cat.jpg',
+                    ft.CircleAvatar(foreground_image_src='https://avatars.mds.yandex.net/i?id=e17a4e0b861858d4c57dd34d0de833d868b5fea3-4078555-images-thumbs&n=13',
                                     width=50, height=40, content=ft.Text('?')),
                     ft.Text(f'{login}', expand=True, color='white', size=30)
                 ], alignment=ft.MainAxisAlignment.START,
