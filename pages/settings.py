@@ -48,6 +48,16 @@ class SettPage:
             )
         )
 
+        def change_theme_func(e):
+            if page.theme_mode == 'dark':
+                page.theme_mode = 'light'
+                change_theme.icon = ft.icons.CLOUD
+            else:
+                page.theme_mode = 'dark'
+                change_theme.icon = ft.icons.SUNNY
+
+        change_theme = ft.IconButton(ft.icons.SUNNY, on_click=change_theme_func)
+
         return ft.View(
             '/settings',
             controls=[
@@ -68,7 +78,8 @@ class SettPage:
                             expand=4,
                             content=ft.Column(
                                 controls=[
-                                    ft.Text('Пока нет ниче')
+                                    ft.Text('Пока нет ниче'),
+                                    change_theme
                                 ]
                             )
                         )

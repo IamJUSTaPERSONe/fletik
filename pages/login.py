@@ -6,7 +6,6 @@ import sqlite3
 import time
 
 
-
 class LoginPage:
 
     error = ft.Text(' ', color='red')
@@ -50,10 +49,12 @@ class LoginPage:
 
         def auth_button(e):
             email_value = self.email_input.content.value
-            password_value = self.password_input.content.value
+            password_value = hash_password(self.password_input.content.value)
             if email_value and password_value:
                 if auth_user(email_value, password_value):
                     self.error.value = 'Выполняется вход в аккаунт'
+                    page.session.set('email_value', email_value)
+
                     self.error.size = 12
                     self.error.color = 'green'
                     self.error.update()

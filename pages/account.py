@@ -1,5 +1,6 @@
 import flet as ft
 from flet_route import Params, Basket
+from database import connect_db
 
 
 class AccPage:
@@ -11,6 +12,7 @@ class AccPage:
         page.window.min_height = 600
 
         login = page.session.get('login_value')
+        email = page.session.get('email_value')
 
         # меню -> заголовок
         logotip = ft.Container(
@@ -48,6 +50,18 @@ class AccPage:
             )
         )
 
+        def date_created(e):
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute('SELECT date_created FROM notes')
+            date_cr = cur.fetchall()
+            conn.close()
+            return date_cr
+
+        date = ft.Text(f'Дата регистрации: {date_created}', size=15)
+        name_user = ft.Text(f'Имя пользователя: ', size=15)
+        email_user = ft.Text(f'Почта: {email} ', size=15)
+
         return ft.View(
             '/acc',
             controls=[
@@ -68,12 +82,15 @@ class AccPage:
                             expand=4,
                             content=ft.Column(
                                 controls=[
-                                    ft.Text('Пока нет ничеeeeee')
+                                    email_user,
+                                    name_user,
+                                    date
                                 ]
-                            )
+                            ), padding=20
                         )
                     ]
                 )
             ], bgcolor='#111014', padding=0
         )
+
 

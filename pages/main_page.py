@@ -61,7 +61,7 @@ class MainPage:
             notes_list.controls.clear()
             notes = get_all_notes()
             for note in notes:
-                note_id = note[0]
+                id_note = note[0]
                 title_note = note[1]
                 text_note = note[2]
                 notes_list.controls.append(ft.Container(
@@ -69,19 +69,17 @@ class MainPage:
                         ft.Text(title_note, size=20),
                         ft.Text(text_note)
                     ]), margin=ft.margin.only(bottom=10),
-                    bgcolor='grey',
+                    bgcolor='#616161',
                     border_radius=10,
                     padding=ft.padding.all(10),
-                    on_click=lambda e: page.go('/edit_note', note_id)
+                    on_click=lambda e, : page.go('/edit_note', id_note)
+
                 ))
                 page.update()
 
         #  строка поиска
-        def search_form(label):
-            return ft.TextField(label=f'{label}', bgcolor='#22242B',
-                                border=ft.InputBorder.NONE, filled=True, color='#E6D6FF')
-
-        search = ft.Container(content=search_form('Найти заметку'), border_radius=20, width=300, expand=2)
+        search = ft.TextField(label=('Найти заметку'), border_radius=20, width=100, expand=1,
+                              color='#E6D6FF', bgcolor='#22242B')
         search_btn = ft.ElevatedButton('🔎', bgcolor='#22242B',
                                        style=ft.ButtonStyle(text_style=ft.TextStyle(size=20)))
 

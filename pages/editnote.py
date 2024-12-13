@@ -1,4 +1,3 @@
-import time
 import flet as ft
 from flet_route import Params, Basket
 from database import connect_db
@@ -11,55 +10,35 @@ class EditNotePage:
     def view(self, page: ft.Page, params: Params, basket: Basket):
         page.title = 'Создание заметки'
 
-        def get_note(note_id):
+        id_note = params.get('id_note')
+
+
+        def edit_note_page(e):
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute('SELECT title_note, text_note FROM notes WHERE note_id = ?', (note_id))
+            cur.execute('SELECT title_note, text_note FROM notes WHERE id_note = ?',
+                        (id_note,))
             note = cur.fetchall()
             conn.close()
-            return note
 
-        def edit_note_page(note_id):
-            note = get_note(note_id)  # Получаем заметку по id
-            title_note = note[0]  # Заголовок заметки
-            text_note = note[1]  # Текст заметки
-
-        def save_note(note_id, title_note, text_note):
-            conn = connect_db()
-            cur = conn.cursor()
-            cur.execute('UPDATE notes SET title_note = ?, text_note = ? WHERE id_note = ?',
-                        (note_id, title_note, text_note))
-            conn.commit()
-            conn.close()
-
-        def submit_note(e):
-            title_note = title_input.value
-            text_note = text_input.value
-            user_id = 1
-            if title_note and text_note:
-                save_note(user_id, title_note, text_note)
-                title_input.value = ''
-                text_input.value = ''
-                save_btn.text = 'Сохранено'
-                page.update()
-                time.sleep(1)
-                page.go('/main_page')
+            if note:
+                title_input.value = note[0]  # Заголовок заметки
+                text_input.value = note[1]  # Текст заметки
             else:
-                self.error.value = 'Заполните все поля'
-                self.error.size = 15
-                self.error.update()
-                time.sleep(2)
-                self.error.size = 0
-                self.error.update()
+                print('something wrong')
 
-        def delete_note(note_id):
-            conn = connect_db()
-            cur = conn.cursor()
-            cur.execute('DELETE FROM notes WHERE id_note = ?', (note_id,))
-            conn.commit()
-            conn.close()
-            page.update()
-            page.go('/main_page')
+        # def save_note(note_id, title_note, text_note):
+        #     conn = connect_db()
+        #     cur = conn.cursor()
+        #     cur.execute('UPDATE notes SET title_note = ?, text_note = ? WHERE id_note = ?',
+        #                 (note_id, title_note, text_note))
+        #     conn.commit()
+        #     conn.close()
+
+        def delete_note():
+            pass
+
+
 
         style_save = ft.ButtonStyle(color={ft.ControlState.HOVERED: '#9B5CFF',
                                            ft.ControlState.DEFAULT: ft.colors.WHITE},
@@ -72,12 +51,12 @@ class EditNotePage:
                                    bgcolor='#22242B', color='#E6D6FF')
         text_input = ft.TextField(label='Текст заметки', expand=True, border_radius=15,
                                   bgcolor='#22242B', color='#E6D6FF')
-        save_btn = ft.ElevatedButton('Сохранить', style=style_save, height=50, on_click=submit_note)
+        save_btn = ft.ElevatedButton('Сохранить', style=style_save, height=50)
         delete_btn = ft.ElevatedButton('Удалить', style=style_save, height=50, on_click=delete_note)
         back_btn = ft.ElevatedButton('На главную', icon='ARROW_BACK_IOS', icon_color='red80',
                                      style=style_back, on_click=lambda e: page.go('/main_page'))
 
-
+        edit_note_page(id_note)
         return ft.View(
             '/edit_note',
             controls=[
