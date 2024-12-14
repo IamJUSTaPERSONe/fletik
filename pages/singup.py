@@ -5,7 +5,6 @@ from database import connect_db
 from utils.function import hash_password
 import time
 import sqlite3
-import bcrypt
 
 
 

@@ -8,10 +8,9 @@ class EditNotePage:
     error = ft.Text(' ', color='red')
 
     def view(self, page: ft.Page, params: Params, basket: Basket):
-        page.title = 'Создание заметки'
+        page.title = 'Редактирование заметки'
 
         id_note = params.get('id_note')
-
 
         def edit_note_page(e):
             conn = connect_db()
@@ -35,11 +34,6 @@ class EditNotePage:
         #     conn.commit()
         #     conn.close()
 
-        def delete_note():
-            pass
-
-
-
         style_save = ft.ButtonStyle(color={ft.ControlState.HOVERED: '#9B5CFF',
                                            ft.ControlState.DEFAULT: ft.colors.WHITE},
                                     overlay_color='white20', shadow_color='black')
@@ -52,7 +46,6 @@ class EditNotePage:
         text_input = ft.TextField(label='Текст заметки', expand=True, border_radius=15,
                                   bgcolor='#22242B', color='#E6D6FF')
         save_btn = ft.ElevatedButton('Сохранить', style=style_save, height=50)
-        delete_btn = ft.ElevatedButton('Удалить', style=style_save, height=50, on_click=delete_note)
         back_btn = ft.ElevatedButton('На главную', icon='ARROW_BACK_IOS', icon_color='red80',
                                      style=style_back, on_click=lambda e: page.go('/main_page'))
 
@@ -66,7 +59,6 @@ class EditNotePage:
                         title_input,
                         text_input,
                         save_btn,
-                        delete_btn,
                         self.error,
                     ],
                     spacing=10,

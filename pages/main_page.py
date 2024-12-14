@@ -52,10 +52,17 @@ class MainPage:
         def get_all_notes():
             conn = connect_db()
             cur = conn.cursor()
-            cur.execute('SELECT id_note, title_note, text_note FROM notes')
+            cur.execute('SELECT id_note, title_note, text_note, date_created FROM notes')
             notes = cur.fetchall()
             conn.close()
             return notes
+
+        def delete_note(id_note):
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute('DELETE FROM notes WHERE id_note = ?', (id_note,))
+            conn.commit()
+            conn.close()
 
         def update_notes():
             notes_list.controls.clear()
@@ -64,27 +71,54 @@ class MainPage:
                 id_note = note[0]
                 title_note = note[1]
                 text_note = note[2]
-                notes_list.controls.append(ft.Container(
-                    content=ft.Column([
-                        ft.Text(title_note, size=20),
-                        ft.Text(text_note)
-                    ]), margin=ft.margin.only(bottom=10),
+                date_created = note[3]
+                note_container = ft.Container(
+                    content=ft.Row([
+                        ft.Column([
+                            ft.Text(date_created, size=10, color='grey'),
+                            ft.Text(title_note, size=20),
+                            ft.Text(text_note)
+                        ]),
+                        ft.IconButton(
+                            icon=ft.icons.DELETE,  # Иконка для удаления
+                            tooltip="Удалить заметку",
+                            icon_color='WHITE50',
+                            on_click=lambda e, note_id=id_note: delete_note_and_update(note_id)  # Передаем id заметки
+                        )
+                    ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
+                    margin=ft.margin.only(bottom=10),
                     bgcolor='#616161',
                     border_radius=10,
                     padding=ft.padding.all(10),
-                    on_click=lambda e, : page.go('/edit_note', id_note)
+                    on_click=lambda e,: page.go('/edit_note', id_note)
+                )
+                notes_list.controls.append(note_container)
+            page.update()
+                # notes_list.controls.append(ft.Container(
+                #     content=ft.Column([
+                #         ft.Text(date_created,size=10, color='grey'),
+                #         ft.Text(title_note, size=20),
+                #         ft.Text(text_note)
+                #     ]), margin=ft.margin.only(bottom=10),
+                #     bgcolor='#616161',
+                #     border_radius=10,
+                #     padding=ft.padding.all(10),
+                #     on_click=lambda e, : page.go('/edit_note', id_note)
+                # ))
+            # page.update()
 
-                ))
-                page.update()
+        def delete_note_and_update(note_id):
+            delete_note(note_id)  # Удаляем заметку из базы данных
+            update_notes()  # Обновляем список заметок
 
         #  строка поиска
         search = ft.TextField(label=('Найти заметку'), border_radius=20, width=100, expand=1,
-                              color='#E6D6FF', bgcolor='#22242B')
+                              color='#B02C2F', bgcolor='#22242B')
         search_btn = ft.ElevatedButton('🔎', bgcolor='#22242B',
                                        style=ft.ButtonStyle(text_style=ft.TextStyle(size=20)))
 
-        create_note_button = ft.TextButton(icon='ADD_SHARP', style=ft.ButtonStyle(icon_size=70),
-                                           on_click=lambda e: page.go('/create_note'))
+        create_note_button = ft.TextButton(icon='ADD_SHARP', style=ft.ButtonStyle(color='white', icon_size=70),
+                                           on_click=lambda e: page.go('/create_note'),)
 
         notes_list = ft.Column()
 

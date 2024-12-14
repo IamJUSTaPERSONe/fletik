@@ -50,15 +50,6 @@ class AccPage:
             )
         )
 
-        def date_created(e):
-            conn = connect_db()
-            cur = conn.cursor()
-            cur.execute('SELECT date_created FROM notes')
-            date_cr = cur.fetchall()
-            conn.close()
-            return date_cr
-
-        date = ft.Text(f'Дата регистрации: {date_created}', size=15)
         name_user = ft.Text(f'Имя пользователя: ', size=15)
         email_user = ft.Text(f'Почта: {email} ', size=15)
 
@@ -76,15 +67,13 @@ class AccPage:
                                     sidebar,
                                 ]
                             ), bgcolor='#22242B'
-
                         ),
                         ft.Container(
                             expand=4,
                             content=ft.Column(
                                 controls=[
                                     email_user,
-                                    name_user,
-                                    date
+                                    name_user
                                 ]
                             ), padding=20
                         )

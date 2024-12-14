@@ -78,10 +78,9 @@ class SettPage:
                             expand=4,
                             content=ft.Column(
                                 controls=[
-                                    ft.Text('Пока нет ниче'),
                                     change_theme
                                 ]
-                            )
+                            ), padding=20
                         )
                     ]
                 )

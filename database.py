@@ -42,3 +42,4 @@ db_table_notes()
 def connect_db():
     conn = sqlite3.connect('notes_app.db')
     return conn
+
