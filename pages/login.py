@@ -53,12 +53,15 @@ class LoginPage:
             if email_value and password_value:
                 if auth_user(email_value, password_value):
                     self.error.value = 'Выполняется вход в аккаунт'
-                    page.session.set('email_value', email_value)
-
+                    # page.session.set('email_value', email_value)
+                    self.email_input.clean()
+                    self.password_input.clean()
+                    self.email_input.update()
+                    self.password_input.update()
+                    page.update()
                     self.error.size = 12
                     self.error.color = 'green'
                     self.error.update()
-                    time.sleep(3)
                     self.error.size = 0
                     page.go('/main_page')
                 else:

@@ -128,6 +128,7 @@ class SingupPage:
                     if reg_user(email_value, login_value, hash_password(password_value)):
                         self.error.value = 'Вы успешно зарегестрированы'
                         page.session.set('login_value', login_value)
+                        page.session.set('email_value', email_value)
                         self.error.size = 12
                         self.error.color = 'green'
                         self.error.update()

@@ -10,6 +10,7 @@ class SettPage:
         page.window.min_width = 900
         page.window.min_height = 600
 
+
         login = page.session.get('login_value')
 
         # меню -> заголовок
@@ -48,15 +49,27 @@ class SettPage:
             )
         )
 
-        def change_theme_func(e):
-            if page.theme_mode == 'dark':
-                page.theme_mode = 'light'
-                change_theme.icon = ft.icons.CLOUD
-            else:
-                page.theme_mode = 'dark'
-                change_theme.icon = ft.icons.SUNNY
+        def switch_to_light(e):
+            page.theme_mode = ft.ThemeMode.LIGHT
+            change_theme.icon = ft.icons.MODE_NIGHT
+            change_theme.icon_color = 'black'
+            page.update()
 
-        change_theme = ft.IconButton(ft.icons.SUNNY, on_click=change_theme_func)
+        def switch_to_dark(e):
+            page.theme_mode = ft.ThemeMode.DARK
+            change_theme.icon = ft.icons.SUNNY
+            change_theme.icon_color = 'WHITE70'
+            page.update()
+
+        change_theme = ft.IconButton(ft.icons.SUNNY, icon_color='WHITE70')
+
+        text_color = ft.Row(
+            controls=[
+                ft.Text('Цвет текста:', size=18),
+                ft.ElevatedButton(text="dark", color='black', on_click=switch_to_light),
+                ft.ElevatedButton(text="white", color='WHITE70', on_click=switch_to_dark)
+            ],
+        )
 
         return ft.View(
             '/settings',
@@ -78,7 +91,10 @@ class SettPage:
                             expand=4,
                             content=ft.Column(
                                 controls=[
+                                    text_color,
                                     change_theme
+
+
                                 ]
                             ), padding=20
                         )

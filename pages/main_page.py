@@ -82,15 +82,15 @@ class MainPage:
                         ft.IconButton(
                             icon=ft.icons.DELETE,  # Иконка для удаления
                             tooltip="Удалить заметку",
-                            icon_color='WHITE50',
+                            icon_color='#45234D',
                             on_click=lambda e, note_id=id_note: delete_note_and_update(note_id)  # Передаем id заметки
                         )
                     ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
                     margin=ft.margin.only(bottom=10),
-                    bgcolor='#616161',
+                    bgcolor='#616161',  #8B8390
                     border_radius=10,
                     padding=ft.padding.all(10),
-                    on_click=lambda e,: page.go('/edit_note', id_note)
+                    on_click=lambda e: page.go('/edit_note', id_note)
                 )
                 notes_list.controls.append(note_container)
             page.update()

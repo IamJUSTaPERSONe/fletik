@@ -50,8 +50,12 @@ class AccPage:
             )
         )
 
-        name_user = ft.Text(f'Имя пользователя: ', size=15)
-        email_user = ft.Text(f'Почта: {email} ', size=15)
+        def delete_account(e):
+            pass
+
+        name_user = ft.Text(f'Имя пользователя: {login}', size=18)
+        email_user = ft.Text(f'Почта: {email} ', size=18)
+        delete_acc = ft.ElevatedButton('Удалить аккаунт', style=style_menu)
 
         return ft.View(
             '/acc',
@@ -73,7 +77,8 @@ class AccPage:
                             content=ft.Column(
                                 controls=[
                                     email_user,
-                                    name_user
+                                    name_user,
+                                    delete_acc
                                 ]
                             ), padding=20
                         )
