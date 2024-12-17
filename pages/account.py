@@ -50,12 +50,33 @@ class AccPage:
             )
         )
 
-        def delete_account(e):
-            pass
+        def close(e):
+            page.close(confirmation_dialog)
+
+        def delete_account(id):
+            # conn = connect_db()
+            # cur = conn.cursor()
+            # cur.execute('DELETE FROM users WHERE id = ?', (id,))
+            # conn.commit()
+            # conn.close()
+            page.close(confirmation_dialog)
+            page.snack_bar = ft.SnackBar(ft.Text('Успешно удалено'))
+            page.snack_bar.open = True
+            page.update()
+
+        confirmation_dialog = ft.AlertDialog(
+            title=ft.Text("Подтверждение удаления аккаунта"),
+            content=ft.Text("Вы уверены, что хотите удалить аккаунт?"),
+            actions=[
+                ft.TextButton("Отмена", on_click=close),
+                ft.TextButton("Удалить", on_click=delete_account)
+            ],
+
+        )
 
         name_user = ft.Text(f'Имя пользователя: {login}', size=18)
         email_user = ft.Text(f'Почта: {email} ', size=18)
-        delete_acc = ft.ElevatedButton('Удалить аккаунт', style=style_menu)
+        delete_acc = ft.ElevatedButton('Удалить аккаунт', style=style_menu, on_click=lambda e: page.open(confirmation_dialog))
 
         return ft.View(
             '/acc',
@@ -78,7 +99,8 @@ class AccPage:
                                 controls=[
                                     email_user,
                                     name_user,
-                                    delete_acc
+                                    delete_acc,
+
                                 ]
                             ), padding=20
                         )

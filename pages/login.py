@@ -29,6 +29,17 @@ class LoginPage:
         page.window.min_width = 800
         page.window.min_height = 400
 
+        # def get_data(user_id):
+        #     conn = connect_db()
+        #     cur = conn.cursor()
+        #     cur.execute('SELECT login FROM users WHERE id = ?', (user_id,))
+        #     data = cur.fetchone()
+        #     conn.close()
+        #     if data:
+        #         return data[0]
+        #     else:
+        #         return None
+
         def auth_user(email, password):
             conn = connect_db()
             cursor = conn.cursor()
@@ -52,16 +63,19 @@ class LoginPage:
             password_value = hash_password(self.password_input.content.value)
             if email_value and password_value:
                 if auth_user(email_value, password_value):
+                    page.session.set('email_value', email_value)
+                    # login = get_data(e)
+                    # page.session.set('login_value', login)
+                    self.error.size = 12
+                    self.error.color = 'green'
                     self.error.value = 'Выполняется вход в аккаунт'
-                    # page.session.set('email_value', email_value)
-                    self.email_input.clean()
-                    self.password_input.clean()
+                    self.error.update()
+                    self.email_input.content.clean()
+                    self.password_input.content.clean()
                     self.email_input.update()
                     self.password_input.update()
                     page.update()
-                    self.error.size = 12
-                    self.error.color = 'green'
-                    self.error.update()
+                    time.sleep(2)
                     self.error.size = 0
                     page.go('/main_page')
                 else:
