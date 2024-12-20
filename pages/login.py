@@ -29,16 +29,18 @@ class LoginPage:
         page.window.min_width = 800
         page.window.min_height = 400
 
-        # def get_data(user_id):
+        # def login_set(email, password):
+        #     user_data = get_data(email, password)
+        #     if user_data:
+        #         page.session.set('login_value', user_data[0])
+        #
+        # def get_data(email, password):
         #     conn = connect_db()
         #     cur = conn.cursor()
-        #     cur.execute('SELECT login FROM users WHERE id = ?', (user_id,))
+        #     cur.execute("SELECT login FROM users WHERE email = ? AND password = ?", (email, password))
         #     data = cur.fetchone()
         #     conn.close()
-        #     if data:
-        #         return data[0]
-        #     else:
-        #         return None
+        #     return data
 
         def auth_user(email, password):
             conn = connect_db()
@@ -64,8 +66,6 @@ class LoginPage:
             if email_value and password_value:
                 if auth_user(email_value, password_value):
                     page.session.set('email_value', email_value)
-                    # login = get_data(e)
-                    # page.session.set('login_value', login)
                     self.error.size = 12
                     self.error.color = 'green'
                     self.error.value = 'Выполняется вход в аккаунт'
@@ -126,13 +126,13 @@ class LoginPage:
                         ),
                         ft.Container(
                             expand=3,
-                            image_src='resours/images/bg1.png',
+                            image_src='resours/images/ground.jpeg',
                             image_fit=ft.ImageFit.COVER,
                             content=ft.Column(
                                 alignment=ft.MainAxisAlignment.CENTER,
                                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                 controls=[
-                                    ft.Icon(name=ft.icons.VERIFIED_USER_ROUNDED,
+                                    ft.Icon(name=ft.icons.LOCK_PERSON,
                                             color='#E6D6FF',
                                             size=140),
                                     ft.Text('Авторизация',

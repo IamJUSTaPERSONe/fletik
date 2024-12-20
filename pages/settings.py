@@ -10,7 +10,6 @@ class SettPage:
         page.window.min_width = 900
         page.window.min_height = 600
 
-
         login = page.session.get('login_value')
 
         # меню -> заголовок
@@ -51,17 +50,11 @@ class SettPage:
 
         def switch_to_light(e):
             page.theme_mode = ft.ThemeMode.LIGHT
-            change_theme.icon = ft.icons.MODE_NIGHT
-            change_theme.icon_color = 'black'
             page.update()
 
         def switch_to_dark(e):
             page.theme_mode = ft.ThemeMode.DARK
-            change_theme.icon = ft.icons.SUNNY
-            change_theme.icon_color = 'WHITE70'
             page.update()
-
-        change_theme = ft.IconButton(ft.icons.SUNNY, icon_color='WHITE70')
 
         text_color = ft.Row(
             controls=[
@@ -70,6 +63,20 @@ class SettPage:
                 ft.ElevatedButton(text="white", color='WHITE70', on_click=switch_to_dark)
             ],
         )
+        # def update_ava(e):
+        #     if e.files:
+        #         file_url = e.files[0].url
+        #         logotip.content.controls[0].foreground_image_scr = file_url
+        #         logotip.update()
+        #     page.remove(file)
+        #
+        # file = ft.FilePicker(on_result=update_ava)
+        #
+        # def upload_file(e):
+        #     page.add(file)
+        #     file.pick_files()
+        #
+        # change_ava_btn = ft.ElevatedButton('Изменить аватарку', on_click=upload_file)
 
         return ft.View(
             '/settings',
@@ -82,7 +89,7 @@ class SettPage:
                             content=ft.Column(
                                 controls=[
                                     logotip,
-                                    sidebar,
+                                    sidebar
                                 ]
                             ), bgcolor='#22242B'
 
@@ -91,10 +98,7 @@ class SettPage:
                             expand=4,
                             content=ft.Column(
                                 controls=[
-                                    text_color,
-                                    change_theme
-
-
+                                    text_color
                                 ]
                             ), padding=20
                         )

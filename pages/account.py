@@ -31,6 +31,9 @@ class AccPage:
         style_menu = ft.ButtonStyle(color={ft.ControlState.HOVERED: '#9B5CFF',
                                            ft.ControlState.DEFAULT: ft.colors.WHITE},
                                     icon_size=25, overlay_color='white20', shadow_color='black')
+        style_btn = ft.ButtonStyle(color={ft.ControlState.HOVERED: 'red',
+                                           ft.ControlState.DEFAULT: ft.colors.WHITE},
+                                    icon_size=25, overlay_color='white20', shadow_color='black')
         # меню -> кнопки
         sidebar = ft.Container(
             padding=ft.padding.symmetric(0, 13),
@@ -53,30 +56,32 @@ class AccPage:
         def close(e):
             page.close(confirmation_dialog)
 
-        def delete_account(id):
-            # conn = connect_db()
-            # cur = conn.cursor()
-            # cur.execute('DELETE FROM users WHERE id = ?', (id,))
-            # conn.commit()
-            # conn.close()
+        def delete_account(email):
+            conn = connect_db()
+            cur = conn.cursor()
+            cur.execute('DELETE FROM users WHERE email = ?', (email,))
+            conn.commit()
+            conn.close()
             page.close(confirmation_dialog)
             page.snack_bar = ft.SnackBar(ft.Text('Успешно удалено'))
             page.snack_bar.open = True
             page.update()
+            page.go('/')
 
         confirmation_dialog = ft.AlertDialog(
             title=ft.Text("Подтверждение удаления аккаунта"),
             content=ft.Text("Вы уверены, что хотите удалить аккаунт?"),
             actions=[
                 ft.TextButton("Отмена", on_click=close),
-                ft.TextButton("Удалить", on_click=delete_account)
+                ft.TextButton("Удалить", on_click=lambda e: delete_account(email))
             ],
 
         )
 
         name_user = ft.Text(f'Имя пользователя: {login}', size=18)
         email_user = ft.Text(f'Почта: {email} ', size=18)
-        delete_acc = ft.ElevatedButton('Удалить аккаунт', style=style_menu, on_click=lambda e: page.open(confirmation_dialog))
+        delete_acc = ft.ElevatedButton('Удалить аккаунт', icon=ft.icons.LOGIN_SHARP,
+                                       style=style_btn, on_click=lambda e: page.open(confirmation_dialog))
 
         return ft.View(
             '/acc',

@@ -191,13 +191,13 @@ class SingupPage:
                         ),
                         ft.Container(
                             expand=3,
-                            image_src='resours/images/bg1.png',
+                            image_src='resours/images/ground.jpeg',
                             image_fit=ft.ImageFit.COVER,
                             content=ft.Column(
                                 alignment=ft.MainAxisAlignment.CENTER,
                                 horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                                 controls=[
-                                    ft.Icon(name=ft.icons.LOCK_PERSON_ROUNDED,
+                                    ft.Icon(name=ft.icons.PERSON_ADD_ALT_ROUNDED,
                                             color='#E6D6FF',
                                             size=140),
                                     ft.Text('Регистрация',
