@@ -2,8 +2,8 @@ import sqlite3
 
 
 def create_db():
-    conn = sqlite3.connect('notes_app.db')
-    cursor = conn.cursor()
+    conn = sqlite3.connect('notes_app.db')  # Подключение к БД
+    cursor = conn.cursor()  # Подключаем курсор
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -12,8 +12,8 @@ def create_db():
             password TEXT
         )
     ''')
-    conn.commit()
-    conn.close()
+    conn.commit()  # Фиксируем изменения в БД
+    conn.close()  # Закрываем соединение
 
 
 create_db()

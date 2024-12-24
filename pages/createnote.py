@@ -13,12 +13,12 @@ class CreateNotePage:
         page.title = 'Создание заметки'
 
         def save_note(user_id, title_note, text_note):
-            conn = connect_db()
-            cur = conn.cursor()
+            conn = connect_db()  # Подключение к БД
+            cur = conn.cursor()  # Подключение курсора
             cur.execute('INSERT INTO notes (user_id, title_note, text_note) VALUES (?, ?, ?)',
-                        (user_id, title_note, text_note))
-            conn.commit()
-            conn.close()
+                        (user_id, title_note, text_note))  # Запрос к БД
+            conn.commit()  # Фиксация изменений
+            conn.close()  # Закрытие соединения
 
         def submit_note(e):
             title_note = title_input.value

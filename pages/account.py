@@ -46,6 +46,8 @@ class AccPage:
                                   on_click=lambda e: page.go('/acc')),
                     ft.TextButton('Настройки', icon='SETTINGS', style=style_menu,
                                   on_click=lambda e: page.go('/settings')),
+                    ft.TextButton('График', icon='BUBBLE_CHART_ROUNDED', style=style_menu,
+                                  on_click=lambda e: page.go('/chart')),
                     ft.Container(height=300),
                     ft.TextButton('Выход', icon='EXIT_TO_APP_SHARP', style=style_menu,
                                   on_click=lambda e: page.go('/'))
@@ -57,11 +59,11 @@ class AccPage:
             page.close(confirmation_dialog)
 
         def delete_account(email):
-            conn = connect_db()
-            cur = conn.cursor()
-            cur.execute('DELETE FROM users WHERE email = ?', (email,))
-            conn.commit()
-            conn.close()
+            conn = connect_db()  # Подключение к базе данных
+            cur = conn.cursor()  # Подключение курсора
+            cur.execute('DELETE FROM users WHERE email = ?', (email,))  # Запрос к БД
+            conn.commit()  # Фиксация изменений
+            conn.close()  # Закрытие соединения
             page.close(confirmation_dialog)
             page.snack_bar = ft.SnackBar(ft.Text('Успешно удалено'))
             page.snack_bar.open = True

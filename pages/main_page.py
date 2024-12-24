@@ -42,6 +42,8 @@ class MainPage:
                                   on_click=lambda e: page.go('/acc')),
                     ft.TextButton('Настройки', icon='SETTINGS', style=style_menu,
                                   on_click=lambda e: page.go('/settings')),
+                    ft.TextButton('График', icon='BUBBLE_CHART_ROUNDED', style=style_menu,
+                                  on_click=lambda e: page.go('/chart')),
                     ft.Container(height=300),
                     ft.TextButton('Выход', icon='EXIT_TO_APP_SHARP', style=style_menu,
                                   on_click=lambda e: page.go('/'))
@@ -62,7 +64,6 @@ class MainPage:
             cur = conn.cursor()
             cur.execute('DELETE FROM notes WHERE id_note = ?', (id_note,))
             conn.commit()
-            conn.close()
 
         def update_notes():
             notes_list.controls.clear()
