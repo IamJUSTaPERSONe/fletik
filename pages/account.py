@@ -40,7 +40,7 @@ class AccPage:
             content=ft.Column(
                 controls=[
                     ft.Text('МЕНЮ', color='grey', size=20),
-                    ft.TextButton('Главная', icon='space_dashboard_rounded', style=style_menu,
+                    ft.TextButton('ГлавнаЯ', icon='space_dashboard_rounded', style=style_menu,
                                   on_click=lambda e: page.go('/main_page')),
                     ft.TextButton('Аккаунт', icon='ACCOUNT_CIRCLE', style=style_menu,
                                   on_click=lambda e: page.go('/acc')),
