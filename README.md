@@ -9,8 +9,7 @@
 📦 Установка и запуск
 1.  Клонируйте репозиторий
     ```bash
-    git clone https://github.com/yourname/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/IamJUSTaPERSONe/fletik.git
     ```
 2.  Создайте виртуальное окужение
     ```bash
